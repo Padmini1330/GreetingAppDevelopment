@@ -1,33 +1,49 @@
 package com.bridgelabz.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="GREETINGS")
 public class Greeting 
 {
-	private long GreetingId;
-	private String name;
-	public Greeting(long incrementAndGet, String name) 
+	@Id
+	private long id;
+	@Override
+	
+	private String message;
+
+	public Greeting() 
 	{
-		setGreetingId(incrementAndGet);
-		setName(name);
+		id=0;
+		message="";
+	}
+	public Greeting(long id, String message) 
+	{
+		setId(id);
+		setMessage(message);
+	}
+	public String getMessage() 
+	{
+		return message;
+	}
+	public void setMessage(String message) 
+	{
+		this.message = message;
+	}
+	public long getId() 
+	{
+		return id;
+	}
+	public void setId(long id) 
+	{
+		this.id = id;
 	}
 	
-	public String getName() 
+	public String toString() 
 	{
-		return name;
-	}
-	
-	public void setName(String name) 
-	{
-		this.name = name;
-	}
-	
-	public long getGreetingId() 
-	{
-		return GreetingId;
-	}
-	
-	public void setGreetingId(long greetingId) 
-	{
-		GreetingId = greetingId;
+		return "Greeting [id=" + id + ", message=" + message + "]";
 	}
 
 }
