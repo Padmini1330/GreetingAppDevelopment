@@ -21,6 +21,7 @@ public class GreetingController
 {
 	private static String template="Hello, %s!";
 	private final AtomicLong counter=new AtomicLong();
+	
 	@Autowired
 	private IGreetingService greetingService;
 
@@ -34,17 +35,10 @@ public class GreetingController
 		return greetingService.addGreeting(user);
 	}
 
-	@RequestMapping(value = { "/query" })
-	public Greeting sayHello(@RequestParam(value = "fname", defaultValue = "Padmini") String fname,
-			@RequestParam(value = "lname", defaultValue = "Sharma") String lname) 
+	@GetMapping("/get/{id}")
+	public String getMessageById(@PathVariable Long id) 
 	{
-		return new Greeting(counter.incrementAndGet(),String.format(template, fname+" "+lname));
-	}
-
-	@GetMapping("/param/{message}")
-	public Greeting parameterName(@PathVariable String message) 
-	{
-		return new Greeting(counter.incrementAndGet(),String.format(template, message));
+		return greetingService.getGreetingById(id).getMessage();
 	}
 
 	@PostMapping("/post")
@@ -58,5 +52,4 @@ public class GreetingController
 	{
 		return new Greeting(counter.incrementAndGet(),String.format(template, firstName+" "+lastName));
 	}
-
 }
