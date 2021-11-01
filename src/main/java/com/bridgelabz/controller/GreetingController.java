@@ -16,6 +16,8 @@ import com.bridgelabz.model.Greeting;
 import com.bridgelabz.model.User;
 import com.bridgelabz.service.IGreetingService;
 
+import java.util.List;
+
 @RestController
 public class GreetingController 
 {
@@ -51,5 +53,11 @@ public class GreetingController
 			@RequestParam(value="lastName",defaultValue="Sharma") String lastName) 
 	{
 		return new Greeting(counter.incrementAndGet(),String.format(template, firstName+" "+lastName));
+	}
+	
+	@GetMapping("/getAll")
+	public List<Greeting> getMessages() 
+	{
+		return greetingService.getAllGreetings();
 	}
 }
