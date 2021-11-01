@@ -19,17 +19,18 @@ import com.bridgelabz.service.IGreetingService;
 @RestController
 public class GreetingController 
 {
-	
 	private static String template="Hello, %s!";
 	private final AtomicLong counter=new AtomicLong();
 	@Autowired
 	private IGreetingService greetingService;
 
 	@GetMapping("/greeting")
-	public Greeting greeting(@RequestParam(value="name" ,defaultValue = "World")String name) 
+	public Greeting greeting(@RequestParam(value="firstName",defaultValue = "")String firstName,
+			@RequestParam(value="lastName",defaultValue = "")String lastName) 
 	{
 		User user = new User();
-		user.setFirstName(name);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
 		return greetingService.addGreeting(user);
 	}
 
@@ -44,7 +45,7 @@ public class GreetingController
 	public Greeting parameterName(@PathVariable String message) 
 	{
 		return new Greeting(counter.incrementAndGet(),String.format(template, message));
-		}
+	}
 
 	@PostMapping("/post")
 	public Greeting setUser(@RequestBody Greeting greeting) 
@@ -57,4 +58,5 @@ public class GreetingController
 	{
 		return new Greeting(counter.incrementAndGet(),String.format(template, firstName+" "+lastName));
 	}
+
 }
