@@ -1,5 +1,7 @@
 package com.bridgelabz.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.bridgelabz.model.Greeting;
@@ -10,4 +12,5 @@ public interface IGreetingService
 {
 	Greeting addGreeting(User user);
 	Greeting getGreetingById(long id);
-}
+	List<Greeting> getAllGreetings();
+}	
