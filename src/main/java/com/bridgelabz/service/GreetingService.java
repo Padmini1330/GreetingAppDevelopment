@@ -28,8 +28,7 @@ public class GreetingService implements IGreetingService
 	@Override
 	public Greeting getGreetingById(long id) 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return greetingRepository.getById(id);
 	}
 
 }
