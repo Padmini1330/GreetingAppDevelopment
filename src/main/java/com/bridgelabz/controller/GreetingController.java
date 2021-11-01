@@ -3,6 +3,9 @@ package com.bridgelabz.controller;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,15 +24,15 @@ import java.util.List;
 @RestController
 public class GreetingController 
 {
-	private static String template="Hello, %s!";
-	private final AtomicLong counter=new AtomicLong();
-	
+	private static String template = "Hello, %s!";
+	private final AtomicLong counter = new AtomicLong();
+
 	@Autowired
 	private IGreetingService greetingService;
 
-	@GetMapping("/greeting")
-	public Greeting greeting(@RequestParam(value="firstName",defaultValue = "")String firstName,
-			@RequestParam(value="lastName",defaultValue = "")String lastName) 
+	@PostMapping("/post")
+	public Greeting greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,
+			@RequestParam(value = "lastName", defaultValue = "") String lastName) 
 	{
 		User user = new User();
 		user.setFirstName(firstName);
@@ -43,33 +46,27 @@ public class GreetingController
 		return greetingService.getGreetingById(id).getMessage();
 	}
 
-	@PostMapping("/post")
-	public Greeting setUser(@RequestBody Greeting greeting) 
-	{
-		return new Greeting(counter.incrementAndGet(),String.format(template, greeting.getMessage()));
-	}
-	@PutMapping("/put/{firstName}")
-	public Greeting sayHelloPutMethod(@PathVariable String firstName,
-			@RequestParam(value="lastName",defaultValue="Sharma") String lastName) 
-	{
-		return new Greeting(counter.incrementAndGet(),String.format(template, firstName+" "+lastName));
-	}
-	
 	@GetMapping("/getAll")
 	public List<Greeting> getMessages() 
 	{
 		return greetingService.getAllGreetings();
 	}
-	
-	
+
 	@PutMapping("/edit/{id}")
-	public Greeting sayHelloPutMethod(@PathVariable Long id,
-			@RequestParam(value="firstName",defaultValue = "")String firstName,
-			@RequestParam(value="lastName",defaultValue = "")String lastName)
+	public Greeting editMessage(@
+			PathVariable Long id,
+			@RequestParam(value = "firstName", defaultValue = "") String firstName,
+			@RequestParam(value = "lastName", defaultValue = "") String lastName) 
 	{
 		User user = new User();
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		return greetingService.editGreeting(id,user);
+		return greetingService.editGreeting(id, user);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<HttpStatus> deleteGreeting(@PathVariable Long id) 
+	{
+		return greetingService.deleteGreeting(id);
 	}
 }
