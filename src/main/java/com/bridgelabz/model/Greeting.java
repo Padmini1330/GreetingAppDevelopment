@@ -10,8 +10,6 @@ public class Greeting
 {
 	@Id
 	private long id;
-	@Override
-	
 	private String message;
 
 	public Greeting() 
