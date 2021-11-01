@@ -8,4 +8,5 @@ import com.bridgelabz.model.Greeting;
 
 @Repository
 public interface GreetingRepository extends JpaRepository<Greeting, Long> {
+	
 }
