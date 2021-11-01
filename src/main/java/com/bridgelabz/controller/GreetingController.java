@@ -41,9 +41,11 @@ public class GreetingController
 	}
 
 	@PostMapping("/post")
-	public Greeting setUser(@RequestBody Greeting greeting) {
+	public Greeting setUser(@RequestBody Greeting greeting) 
+	{
 	return new Greeting(counter.incrementAndGet(),String.format(template, greeting.getName()));
 	}
+	
 	@PutMapping("/put/{firstName}")
 	public Greeting sayHelloPutMethod(@PathVariable String firstName,
 			@RequestParam(value="lastName",defaultValue="Sharma") String lastName) 
